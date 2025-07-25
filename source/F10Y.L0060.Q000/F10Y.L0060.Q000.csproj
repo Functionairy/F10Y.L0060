@@ -9,15 +9,15 @@
     <Authors>DCoats</Authors>
     <Company>Functionairy</Company>
     <Copyright>Copyright © Functionairy 2025</Copyright>
-    <Description>.NET 6.0 foundation library.</Description>
+    <Description>Explorations sub-library for the F10Y.L0060 .NET 6.0 foundation library.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <RepositoryUrl>https://github.com/Functionairy/F10Y.L0060.git</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\F10Y.L0000\source\F10Y.L0000\F10Y.L0000.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Code\Functions\" />
+    <ProjectReference Include="..\F10Y.L0060\F10Y.L0060.csproj" />
+    <ProjectReference Include="..\..\..\F10Y.L0004\source\F10Y.L0004.L000\F10Y.L0004.L000.csproj" />
+    <ProjectReference Include="..\..\..\F10Y.L0019\source\F10Y.L0019\F10Y.L0019.csproj" />
+    <ProjectReference Include="..\..\..\F10Y.T0006\source\F10Y.T0006\F10Y.T0006.csproj" />
+    <ProjectReference Include="..\..\..\F10Y.Z0000\source\F10Y.Z0000\F10Y.Z0000.csproj" />
   </ItemGroup>
 </Project>
