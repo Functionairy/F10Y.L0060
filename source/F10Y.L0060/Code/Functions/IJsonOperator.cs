@@ -14,6 +14,15 @@ namespace F10Y.L0060
     [FunctionsMarker]
     public partial interface IJsonOperator
     {
+        public JsonArray As_Array(JsonNode node)
+            => node.AsArray();
+
+        public JsonObject As_Object(JsonNode node)
+            => node.AsObject();
+
+        public JsonValue As_Value(JsonNode node)
+            => node.AsValue();
+
         public Task<T> Deserialize_FromFile<T>(string jsonFilePath)
             => this.Load_FromFile<T>(jsonFilePath);
 
@@ -22,6 +31,69 @@ namespace F10Y.L0060
             var output = JsonSerializer.Deserialize<T>(jsonText);
             return output;
         }
+
+        public JsonNode Get_Child(
+            JsonNode node,
+            string childName)
+        {
+            var output = node[childName];
+            return output;
+        }
+
+        public JsonArray Get_Child_AsArray(
+           JsonNode node,
+           string childName)
+        {
+            var child = this.Get_Child(
+                node,
+                childName);
+
+            var output = child.AsArray();
+            return output;
+        }
+
+        public JsonObject Get_Child_AsObject(
+           JsonNode node,
+           string childName)
+        {
+            var child = this.Get_Child(
+                node,
+                childName);
+
+            var output = child.AsObject();
+            return output;
+        }
+
+        public JsonValue Get_Child_AsValue(
+           JsonNode node,
+           string childName)
+        {
+            var child = this.Get_Child(
+                node,
+                childName);
+
+            var output = child.AsValue();
+            return output;
+        }
+
+        public T Get_Child_Value<T>(
+            JsonNode node,
+            string childName)
+        {
+            var value = this.Get_Child_AsValue(
+                node,
+                childName);
+
+            var output = this.Get_Value<T>(value);
+            return output;
+        }
+
+        public string Get_Child_Value(
+            JsonNode node,
+            string childName)
+            => this.Get_Child_Value<string>(
+                node,
+                childName);
 
         public JsonSerializerOptions Get_Options_Standard()
         {
@@ -33,11 +105,151 @@ namespace F10Y.L0060
             return output;
         }
 
+        public T Get_Value<T>(JsonValue value)
+            => value.GetValue<T>();
+
+        public string Get_Value(JsonValue value)
+            => this.Get_Value<string>(value);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Quality-of-life overload for <see cref="Has_Property(JsonObject, string, out JsonNode)"/>.
+        /// </remarks>
+        public bool Has_Child(
+            JsonObject value,
+            string childName,
+            out JsonNode child_OrDefault)
+            => this.Has_Property(
+                value,
+                childName,
+                out child_OrDefault);
+
+        public bool Has_Property(
+            JsonObject value,
+            string propertyName,
+            out JsonNode property_OrDefault)
+        {
+            var output = value.TryGetPropertyValue(
+                propertyName,
+                out property_OrDefault);
+
+            return output;
+        }
+
+        public bool Has_Property_AsArray(
+            JsonObject value,
+            string propertyName,
+            out JsonArray property_OrDefault)
+        {
+            var output = this.Has_Property(
+                value,
+                propertyName,
+                out var property_OrDefault_AsNode);
+
+            property_OrDefault = Instances.DefaultOperator.Convert(
+                property_OrDefault_AsNode,
+                this.As_Array);
+
+            return output;
+        }
+
+        public bool Has_Property_AsObject(
+            JsonObject value,
+            string propertyName,
+            out JsonObject property_OrDefault)
+        {
+            var output = this.Has_Property(
+                value,
+                propertyName,
+                out var property_OrDefault_AsNode);
+
+            property_OrDefault = Instances.DefaultOperator.Convert(
+                property_OrDefault_AsNode,
+                this.As_Object);
+
+            return output;
+        }
+
+        public bool Has_Property_AsValue(
+            JsonObject value,
+            string propertyName,
+            out JsonValue property_OrDefault)
+        {
+            var output = this.Has_Property(
+                value,
+                propertyName,
+                out var property_OrDefault_AsNode);
+
+            property_OrDefault = Instances.DefaultOperator.Convert(
+                property_OrDefault_AsNode,
+                this.As_Value);
+
+            return output;
+        }
+
         public async Task<T> Load_FromFile<T>(string jsonFilePath)
         {
             using var fileStream = Instances.FileStreamOperator.Open_Read(jsonFilePath);
 
             var output = await JsonSerializer.DeserializeAsync<T>(fileStream);
+            return output;
+        }
+
+        public Task<JsonObject> Load_FromFile_AsObject(string jsonFilePath)
+            => this.Load_FromFile<JsonObject>(jsonFilePath);
+
+        public JsonNode Parse_AsNode(string jsonText)
+        {
+            var output = JsonObject.Parse(jsonText);
+            return output;
+        }
+
+        public JsonArray Parse_AsArray(string jsonText)
+        {
+            var node = this.Parse_AsNode(jsonText);
+
+            var output = node.AsArray();
+            return output;
+        }
+        
+        public JsonDocument Parse_AsDocument(string jsonText)
+        {
+            var output = JsonDocument.Parse(jsonText);
+            return output;
+        }
+
+        public JsonElement Parse_AsElement(string jsonText)
+        {
+            var document = this.Parse_AsDocument(jsonText);
+
+            var output = document.RootElement;
+            return output;
+        }
+
+        public JsonObject Parse_AsObject(string jsonText)
+        {
+            var node = this.Parse_AsNode(jsonText);
+
+            var output = node.AsObject();
+            return output;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Chooses <see cref="Parse_AsObject(string)"/> as the default.
+        /// </remarks>
+        public JsonObject Parse(string jsonText)
+            => this.Parse_AsObject(jsonText);
+
+        public JsonValue Parse_AsValue(string jsonText)
+        {
+            var node = this.Parse_AsNode(jsonText);
+
+            var output = node.AsValue();
             return output;
         }
 
