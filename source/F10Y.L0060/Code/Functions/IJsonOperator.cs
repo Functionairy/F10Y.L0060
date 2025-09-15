@@ -200,6 +200,20 @@ namespace F10Y.L0060
         public Task<JsonObject> Load_FromFile_AsObject(string jsonFilePath)
             => this.Load_FromFile<JsonObject>(jsonFilePath);
 
+        public async Task<T> Load_FromFile<T>(
+            string jsonFilePath,
+            string objectKey)
+        {
+            var jsonText = await Instances.FileOperator.Read_Text(jsonFilePath);
+
+            var rootElement = JsonSerializer.Deserialize<JsonElement>(jsonText);
+
+            var keyedElement = rootElement.GetProperty(objectKey);
+
+            var output = keyedElement.Deserialize<T>();
+            return output;
+        }
+
         public JsonNode Parse_AsNode(string jsonText)
         {
             var output = JsonObject.Parse(jsonText);
