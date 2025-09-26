@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
@@ -214,6 +216,35 @@ namespace F10Y.L0060
             return output;
         }
 
+        public T Load_FromFile_Synchronous<T>(
+            string jsonFilePath,
+            string objectKey)
+        {
+            var jsonText = Instances.FileOperator.Read_AllText_Synchronous(jsonFilePath);
+
+            var rootElement = JsonSerializer.Deserialize<JsonElement>(jsonText);
+
+            var keyedElement = rootElement.GetProperty(objectKey);
+
+            var output = keyedElement.Deserialize<T>();
+            return output;
+        }
+
+        /// <summary>
+        /// Quality-of-life overload for <see cref="F10Y.L0060.IJsonOperator.Deserialize_FromText{T}(string)"/>
+        /// </summary>
+        public T Load_FromString<T>(string jsonString)
+            => this.Deserialize_FromText<T>(jsonString);
+
+        public JsonArray New_Array(IEnumerable<JsonNode> nodes)
+            => this.New_Array(nodes.ToArray());
+
+        public JsonArray New_Array(params JsonNode[] nodes)
+            => new(nodes);
+
+        public JsonObject New_Object()
+            => new();
+
         public JsonNode Parse_AsNode(string jsonText)
         {
             var output = JsonObject.Parse(jsonText);
@@ -250,6 +281,30 @@ namespace F10Y.L0060
             return output;
         }
 
+        public JsonObject Parse_Object_FromJsonText(string jsonText)
+        {
+            var output = JsonObject.Parse(jsonText).AsObject();
+            return output;
+        }
+
+        public T Parse_FromJsonText<T>(
+            string jsonText,
+            string keyName)
+        {
+            var jsonObject = this.Parse_Object_FromJsonText(jsonText);
+
+            var jsonNode = jsonObject[keyName];
+
+            var output = jsonNode.GetValue<T>();
+            return output;
+        }
+
+        /// <summary>
+        /// Quality-of-life overload for <see cref="Parse_Object_FromJsonText(string)"/>.
+        /// </summary>
+        public JsonObject Parse_FromJsonText(string jsonText)
+            => this.Parse_Object_FromJsonText(jsonText);
+
         /// <summary>
         /// 
         /// </summary>
@@ -264,6 +319,62 @@ namespace F10Y.L0060
             var node = this.Parse_AsNode(jsonText);
 
             var output = node.AsValue();
+            return output;
+        }
+
+        public void Save_ToFile_Synchronous<T>(
+            string jsonFilePath,
+            T value)
+        {
+            using var fileStream = Instances.FileStreamOperator.Open_Write(
+                jsonFilePath);
+
+            JsonSerializer.Serialize(
+                fileStream,
+                value);
+        }
+
+        public async Task Save_ToFile<T>(
+            string jsonFilePath,
+            T value,
+            JsonSerializerOptions options)
+        {
+            // "await using" because file steam is IAsyncDisposable.
+            await using var fileStream = Instances.FileStreamOperator.Open_Write(
+                jsonFilePath);
+
+            await JsonSerializer.SerializeAsync(
+                fileStream,
+                value,
+                options);
+        }
+
+        public Task Save_ToFile<T>(
+            string jsonFilePath,
+            T value)
+        {
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+            };
+
+            return this.Save_ToFile<T>(
+                jsonFilePath,
+                value,
+                options);
+        }
+
+        public string Save_ToString<T>(T value)
+        {
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+            };
+
+            var output = JsonSerializer.Serialize(
+                value,
+                options);
+
             return output;
         }
 
