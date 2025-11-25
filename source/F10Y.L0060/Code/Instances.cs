@@ -5,8 +5,8 @@ namespace F10Y.L0060
 {
     public static class Instances
     {
+        public static L0000.IDateTimeFormats DateTimeFormats => L0000.DateTimeFormats.Instance;
         public static IDateOnlyOperator DateOnlyOperator => L0060.DateOnlyOperator.Instance;
-        public static L0001.L000.IDateTimeFormatTemplates DateTimeFormatTemplates => L0001.L000.DateTimeFormatTemplates.Instance;
         public static L0000.IDateTimeOffsetOperator DateTimeOffsetOperator => L0000.DateTimeOffsetOperator.Instance;
         public static IDateTimeOperator DateTimeOperator => L0060.DateTimeOperator.Instance;
         public static L0000.IDefaultOperator DefaultOperator => L0000.DefaultOperator.Instance;

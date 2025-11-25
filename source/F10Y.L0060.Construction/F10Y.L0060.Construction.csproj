@@ -2,7 +2,7 @@
   <PropertyGroup Label="Main">
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework> <!--Uses .NET 6.0 as executable target framework to match library.-->
-    <NoWarn>CS1573;CS1587;CS1591;IDE0130</NoWarn>
+    <NoWarn>NETSDK1138;CS1573;CS1587;CS1591;IDE0130</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup Label="Package">

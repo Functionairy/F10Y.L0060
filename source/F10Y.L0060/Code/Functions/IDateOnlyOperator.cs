@@ -14,29 +14,29 @@ namespace F10Y.L0060
     [FunctionsMarker]
     public partial interface IDateOnlyOperator
     {
-        public DateOnly Add_Days(DateOnly date, int days)
+        DateOnly Add_Days(DateOnly date, int days)
             => date.AddDays(days);
 
-        public DateOnly Add_Day(DateOnly date)
+        DateOnly Add_Day(DateOnly date)
             => this.Add_Days(date, 1);
 
-        public DateOnly Add_Years(DateOnly date, int years)
+        DateOnly Add_Years(DateOnly date, int years)
             => date.AddYears(years);
 
-        public DateOnly Add_Year(DateOnly date)
+        DateOnly Add_Year(DateOnly date)
             => this.Add_Years(date, 1);
 
-        public DateOnly Subtract_Year(DateOnly date)
+        DateOnly Subtract_Year(DateOnly date)
             => this.Add_Years(date, -1);
 
-        public string Format(
+        string Format(
             DateOnly date,
             string formatTemplate)
             => Instances.StringOperator.Format(
                 formatTemplate,
                 date);
 
-        public DateOnly Get_Today_Local()
+        DateOnly Get_Today_Local()
         {
             var dateTime = Instances.DateTimeOperator.Get_Today_Local();
 
@@ -44,7 +44,7 @@ namespace F10Y.L0060
             return output;
         }
 
-        public DateOnly Get_Today_Utc()
+        DateOnly Get_Today_Utc()
         {
             var dateTime = Instances.DateTimeOperator.Get_Today_Utc();
 
@@ -55,13 +55,13 @@ namespace F10Y.L0060
         /// <summary>
         /// Chooses <see cref="Get_Today_Local"/> as the default.
         /// </summary>
-        public DateOnly Get_Today()
+        DateOnly Get_Today()
         {
             var today = this.Get_Today_Local();
             return today;
         }
 
-        public DateOnly Get_Tomorrow_Local()
+        DateOnly Get_Tomorrow_Local()
         {
             var todayLocalDateTime = Instances.DateTimeOperator.Get_Tomorrow_Local();
 
@@ -69,7 +69,7 @@ namespace F10Y.L0060
             return todayLocal;
         }
 
-        public DateOnly Get_Tomorrow_Utc()
+        DateOnly Get_Tomorrow_Utc()
         {
             var todayUtcDateTime = Instances.DateTimeOperator.Get_Tomorrow_Utc();
 
@@ -80,7 +80,7 @@ namespace F10Y.L0060
         /// <summary>
         /// Chooses <see cref="Get_Tomorrow_Local"/> as the default.
         /// </summary>
-        public DateOnly Get_Tomorrow()
+        DateOnly Get_Tomorrow()
         {
             var today = this.Get_Tomorrow_Local();
             return today;
@@ -89,13 +89,13 @@ namespace F10Y.L0060
         int Get_Year(DateOnly date)
             => date.Year;
 
-        public DateOnly From_DateTime(DateTime dateTime)
+        DateOnly From_DateTime(DateTime dateTime)
         {
             var dateOnly = DateOnly.FromDateTime(dateTime);
             return dateOnly;
         }
 
-        public DateTime To_DateTime(DateOnly date)
+        DateTime To_DateTime(DateOnly date)
         {
             var output = Instances.DateTimeOperator.From(
                 date.Year,
@@ -106,28 +106,28 @@ namespace F10Y.L0060
             return output;
         }
 
-        public DateOnly Get_DateOnly(DateTime dateTime)
+        DateOnly Get_DateOnly(DateTime dateTime)
         {
             var output = DateOnly.FromDateTime(dateTime);
             return output;
         }
 
-        public bool Is_Saturday(DateOnly date)
+        bool Is_Saturday(DateOnly date)
     => this.Is_DayOfWeek(
         date,
         DayOfWeek.Saturday);
 
-        public bool Is_Sunday(DateOnly date)
+        bool Is_Sunday(DateOnly date)
             => this.Is_DayOfWeek(
                 date,
                 DayOfWeek.Sunday);
 
-        public bool Is_DayOfWeek(
+        bool Is_DayOfWeek(
             DateOnly date,
             DayOfWeek dayOfWeek)
             => date.DayOfWeek == dayOfWeek;
 
-        public DateOnly Parse_Exact(
+        DateOnly Parse_Exact(
             string dateOnlyString,
             string formatString)
         {
@@ -137,17 +137,5 @@ namespace F10Y.L0060
 
             return output;
         }
-
-        /// <inheritdoc cref="L0001.L000.IDateTimeFormatTemplates.yyyyMMdd"/>
-        public string To_String_YYYYMMDD(DateOnly date)
-            => this.Format(
-                date,
-                Instances.DateTimeFormatTemplates.yyyyMMdd);
-
-        /// <inheritdoc cref="L0001.L000.IDateTimeFormatTemplates.yyyy_MM_dd_Dashed"/>
-        public string ToString_YYYY_MM_DD_Dashed(DateOnly date)
-            => this.Format(
-                date,
-                Instances.DateTimeFormatTemplates.yyyy_MM_dd_Dashed);
     }
 }

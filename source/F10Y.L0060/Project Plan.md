@@ -1,12 +1,18 @@
 # F10Y.L0060
-.NET 6.0 foundation library.
+.NET 6.0 language-only (foundation) library.
 
 The main reasons for this library are:
 
 - Introduction of DateOnly and TimeOnly types.
 - .NET 6.0 includes full development of System.Text.Json source-generation features.
 
-- 
+Allowed dependencies:
+
+	- net6.0
+	- Language libraries of prior .NET versions:
+		- F10Y.L0000 - netstandard2.1 language library.
+
+
 ## F10Y.L0024
 
 The F10Y.L0024 library contains the same functionality, but based on the System.Text.Json package for use in prior versions of .NET.

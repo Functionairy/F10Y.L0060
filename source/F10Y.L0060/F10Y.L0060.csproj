@@ -16,7 +16,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\F10Y.L0000\source\F10Y.L0000\F10Y.L0000.csproj" />
-    <ProjectReference Include="..\..\..\F10Y.L0001\source\F10Y.L0001.L000\F10Y.L0001.L000.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Code\Functions\" />
