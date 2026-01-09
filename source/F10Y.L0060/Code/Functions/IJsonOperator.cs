@@ -199,6 +199,29 @@ namespace F10Y.L0060
             return output;
         }
 
+        async Task<T> Load_FromFile<T, TSerialization>(
+            string jsonFilePath,
+            Func<TSerialization, T> deserialization_Converter)
+        {
+            var serialization = await this.Load_FromFile<TSerialization>(jsonFilePath);
+
+            var output = deserialization_Converter(serialization);
+            return output;
+        }
+
+        async Task<T[]> Load_FromFile_Many<T, TSerialization>(
+            string jsonFilePath,
+            Func<TSerialization, T> deserialization_Converter)
+        {
+            var serializations = await this.Load_FromFile<TSerialization[]>(jsonFilePath);
+
+            var output = serializations
+                .Select(deserialization_Converter)
+                .ToArray();
+
+            return output;
+        }
+
         Task<JsonObject> Load_FromFile_AsObject(string jsonFilePath)
             => this.Load_FromFile<JsonObject>(jsonFilePath);
 
@@ -362,6 +385,32 @@ namespace F10Y.L0060
                 jsonFilePath,
                 value,
                 options);
+        }
+
+        async Task Save_ToFile<T, TSerialization>(
+            string jsonFilePath,
+            T value,
+            Func<T, TSerialization> serialization_Converter)
+        {
+            var serialization = serialization_Converter(value);
+
+            await this.Save_ToFile(
+                jsonFilePath,
+                serialization);
+        }
+
+        async Task Save_ToFile<T, TSerialization>(
+            string jsonFilePath,
+            T[] values,
+            Func<T, TSerialization> serialization_Converter)
+        {
+            var serializations = values
+                .Select(serialization_Converter)
+                ;
+
+            await this.Save_ToFile(
+                jsonFilePath,
+                serializations);
         }
 
         string Save_ToString<T>(T value)
