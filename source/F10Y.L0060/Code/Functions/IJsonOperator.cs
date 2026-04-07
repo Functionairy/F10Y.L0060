@@ -430,7 +430,7 @@ namespace F10Y.L0060
         Task Serialize<T>(
             string jsonFilePath,
             T value)
-            => this.Serialize_ToFile<T>(
+            => this.Serialize_ToFile(
                 jsonFilePath,
                 value);
 
@@ -449,7 +449,7 @@ namespace F10Y.L0060
             => this.Serialize_ToFile(
                 jsonFilePath,
                 value,
-                Instances.JsonSerializerOptionsSet.Indented);
+                Instances.JsonSerializerOptionsSet.Indented_UnsafeRelaxedJsonEscaping);
 
         Task Serialize_ToFile<T>(
             string jsonFilePath,

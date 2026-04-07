@@ -1,4 +1,5 @@
 using System;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 
 using F10Y.T0003;
@@ -21,6 +22,18 @@ namespace F10Y.L0060
         /// </summary>
         public JsonSerializerOptions Indented => new()
         {
+            WriteIndented = true
+        };
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item><see cref="JsonSerializerOptions.Encoder"/>, <see cref="JavaScriptEncoder.UnsafeRelaxedJsonEscaping"/></item>
+        /// <item><see cref="JsonSerializerOptions.WriteIndented"/>, true</item>
+        /// </list>
+        /// </summary>
+        public JsonSerializerOptions Indented_UnsafeRelaxedJsonEscaping => new()
+        {
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             WriteIndented = true
         };
     }
