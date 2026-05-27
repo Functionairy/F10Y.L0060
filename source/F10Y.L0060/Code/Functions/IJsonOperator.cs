@@ -28,6 +28,9 @@ namespace F10Y.L0060
         Task<T> Deserialize_FromFile<T>(string jsonFilePath)
             => this.Load_FromFile<T>(jsonFilePath);
 
+        Task<JsonArray> Deserialize_FromFile_AsJsonArray(string jsonFilePath)
+            => this.Load_FromFile<JsonArray>(jsonFilePath);
+
         T Deserialize_FromText<T>(string jsonText)
         {
             var output = JsonSerializer.Deserialize<T>(jsonText);
@@ -98,14 +101,7 @@ namespace F10Y.L0060
                 childName);
 
         JsonSerializerOptions Get_Options_Standard()
-        {
-            var output = new JsonSerializerOptions
-            {
-                WriteIndented = true,
-            };
-
-            return output;
-        }
+            => Instances.JsonSerializerOptionsSet.Indented_UnsafeRelaxedJsonEscaping;
 
         T Get_Value<T>(JsonValue value)
             => value.GetValue<T>();
@@ -479,7 +475,7 @@ namespace F10Y.L0060
 
         string Serialize_ToText<T>(T value)
         {
-            var options = this.Get_Options_Standard();
+            var options = Instances.JsonSerializerOptionsSet.Indented_UnsafeRelaxedJsonEscaping;
 
             var output = this.Serialize_ToText(
                 value,
