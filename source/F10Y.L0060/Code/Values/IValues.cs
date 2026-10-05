@@ -12,7 +12,7 @@ namespace F10Y.L0060
 #pragma warning disable IDE1006 // Naming Styles
 
         [Ignore]
-        public L0000.IValues _L0000 => L0000.Values.Instance;
+        L0000.IValues _L0000 => L0000.Values.Instance;
 
 #pragma warning restore IDE1006 // Naming Styles
     }

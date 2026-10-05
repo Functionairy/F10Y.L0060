@@ -13,14 +13,14 @@ namespace F10Y.L0060
         /// <summary>
         /// The default value provided by the parameterless constructor.
         /// </summary>
-        public JsonSerializerOptions Default => new();
+        JsonSerializerOptions Default => new();
 
         /// <summary>
         /// <list type="bullet">
         /// <item><see cref="JsonSerializerOptions.WriteIndented"/>, true</item>
         /// </list>
         /// </summary>
-        public JsonSerializerOptions Indented => new()
+        JsonSerializerOptions Indented => new()
         {
             WriteIndented = true
         };
@@ -31,7 +31,7 @@ namespace F10Y.L0060
         /// <item><see cref="JsonSerializerOptions.WriteIndented"/>, true</item>
         /// </list>
         /// </summary>
-        public JsonSerializerOptions Indented_UnsafeRelaxedJsonEscaping => new()
+        JsonSerializerOptions Indented_UnsafeRelaxedJsonEscaping => new()
         {
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             WriteIndented = true

@@ -26,8 +26,17 @@ namespace F10Y.L0060
         DateOnly Add_Year(DateOnly date)
             => this.Add_Years(date, 1);
 
+        bool Are_Equal(DateOnly a, DateOnly b)
+            => a == b;
+
+        DateOnly Subtract_Days(DateOnly date, int days)
+            => this.Add_Days(date, -days);
+
         DateOnly Subtract_Year(DateOnly date)
-            => this.Add_Years(date, -1);
+            => this.Subtract_Years(date, 1);
+
+        DateOnly Subtract_Years(DateOnly date, int years)
+            => this.Add_Years(date, -years);
 
         string Format(
             DateOnly date,
@@ -89,11 +98,26 @@ namespace F10Y.L0060
         int Get_Year(DateOnly date)
             => date.Year;
 
+        DateOnly From(string value)
+            => this.Parse(value);
+
+        DateOnly From(DateTime dateTime)
+            => this.From_DateTime(dateTime);
+
+        DateOnly From_YYYYMMDD(string yyyymmdd)
+            => this.Parse_YYYYMMDD(yyyymmdd);
+
         DateOnly From_DateTime(DateTime dateTime)
         {
             var dateOnly = DateOnly.FromDateTime(dateTime);
             return dateOnly;
         }
+
+        bool Is_Default(DateOnly date)
+            => Instances.DefaultOperator.Is_Default(date);
+
+        bool Is_NotDefault(DateOnly date)
+            => !this.Is_Default(date);
 
         DateTime To_DateTime(DateOnly date)
         {
@@ -127,6 +151,9 @@ namespace F10Y.L0060
             DayOfWeek dayOfWeek)
             => date.DayOfWeek == dayOfWeek;
 
+        DateOnly Parse(string value)
+            => DateOnly.Parse(value);
+
         DateOnly Parse_Exact(
             string dateOnlyString,
             string formatString)
@@ -137,5 +164,10 @@ namespace F10Y.L0060
 
             return output;
         }
+
+        DateOnly Parse_YYYYMMDD(string dateOnlyString)
+            => this.Parse_Exact(
+                dateOnlyString,
+                Instances.DateTimeFormats.yyyyMMdd);
     }
 }
