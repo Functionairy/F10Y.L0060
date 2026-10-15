@@ -19,4 +19,16 @@ namespace F10Y.L0060
         public static L0000.IStringOperator StringOperator => L0000.StringOperator.Instance;
         public static L0000.ITypeOperator TypeOperator => L0000.TypeOperator.Instance;
     }
+
+
+    namespace N001
+    {
+#pragma warning disable IDE1006 // Naming Styles
+        public interface Instances
+#pragma warning restore IDE1006 // Naming Styles
+        {
+            public static IDateOnlyOperator DateOnlyOperator => L0060.DateOnlyOperator.Instance;
+            public static IJsonOperator JsonOperator => L0060.JsonOperator.Instance;
+        }
+    }
 }
